@@ -8,62 +8,101 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ClipPath(
-          clipper: MyClipper(),
-          child: Container(
-            height: 350,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image:
-                  DecorationImage(image: AssetImage('assets/images/virus.png')),
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Color(0xFF3383CD),
-                  Color(0xFF11249F),
-                ],
-              ),
-            ),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: SvgPicture.asset('assets/icons/menu.svg'),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  child: Stack(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: SvgPicture.asset(
-                          'assets/icons/Drcorona.svg',
-                          alignment: Alignment.topCenter,
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                      Positioned(
-                        top: 20,
-                        left: 180,
-                        child: Text(
-                          'All you need \nis stay at home',
-                          style: kHeadingTextStyle.copyWith(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                      ),
-                      Container()
+        child: Column(
+          children: <Widget>[
+            ClipPath(
+              clipper: MyClipper(),
+              child: Container(
+                height: 350,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/virus.png')),
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color(0xFF3383CD),
+                      Color(0xFF11249F),
                     ],
                   ),
-                )
-              ],
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: SvgPicture.asset('assets/icons/menu.svg'),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: Stack(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30.0),
+                            child: SvgPicture.asset(
+                              'assets/icons/Drcorona.svg',
+                              alignment: Alignment.topCenter,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                          Positioned(
+                            top: 20,
+                            left: 180,
+                            child: Text(
+                              'All you need \nis stay at home',
+                              style: kHeadingTextStyle.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Container()
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
+            Container(
+              height: 60,
+              margin: EdgeInsets.symmetric(horizontal: 15.0),
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Color(0xFFE5E5E5))),
+              child: Row(
+                children: <Widget>[
+                  SvgPicture.asset(
+                    'assets/icons/maps-and-flags.svg',
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: DropdownButton<String>(
+                      value: 'India',
+                      icon: SvgPicture.asset('assets/icons/dropdown.svg'),
+                      underline: SizedBox(),
+                      isExpanded: true,
+                      items: ['India', 'Australia', 'USA', 'UK']
+                          .map((String dropdownitem) {
+                        return DropdownMenuItem(
+                          value: dropdownitem,
+                          child: Text(dropdownitem),
+                        );
+                      }).toList(),
+                      onChanged: (val) {},
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
