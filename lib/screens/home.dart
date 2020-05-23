@@ -1,4 +1,7 @@
+import 'package:covid19app/constant.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -21,6 +24,44 @@ class Home extends StatelessWidget {
                   Color(0xFF11249F),
                 ],
               ),
+            ),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: SvgPicture.asset('assets/icons/menu.svg'),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: Stack(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30.0),
+                        child: SvgPicture.asset(
+                          'assets/icons/Drcorona.svg',
+                          alignment: Alignment.topCenter,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                      Positioned(
+                        top: 20,
+                        left: 180,
+                        child: Text(
+                          'All you need \nis stay at home',
+                          style: kHeadingTextStyle.copyWith(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                      ),
+                      Container()
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
