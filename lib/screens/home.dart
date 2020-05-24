@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
             ClipPath(
               clipper: MyClipper(),
               child: Container(
-                height: 350,
+                height: 280,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -69,7 +69,7 @@ class Home extends StatelessWidget {
               ),
             ),
             Container(
-              height: 60,
+              height: 50,
               margin: EdgeInsets.symmetric(horizontal: 15.0),
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
@@ -98,8 +98,49 @@ class Home extends StatelessWidget {
                       }).toList(),
                       onChanged: (val) {},
                     ),
-                  )
+                  ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Case Update',
+                      style: kTitleTextstyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Newest Update May 24',
+                          style: TextStyle(color: kTextLightColor),
+                        ),
+                        Text(
+                          'see details',
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
+                    )
+                  ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 30,
+                          color: kShadowColor)
+                    ]),
               ),
             )
           ],
@@ -113,9 +154,9 @@ class MyClipper extends CustomClipper<Path> {
   @override
   getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height - 80);
+    path.lineTo(0, size.height - 60);
     path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 80);
+        size.width / 2, size.height, size.width, size.height - 60);
     path.lineTo(size.width, 0);
     path.close();
     return path;
