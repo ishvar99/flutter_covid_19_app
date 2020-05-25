@@ -1,9 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:covid19app/utilities/networkHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import '../widgets/dropDownList.dart';
 import '../widgets/DetailsCard.dart';
 import '../constant.dart';
+
+const url = 'https://covid19.mathdro.id/api/';
 
 class Home extends StatefulWidget {
   @override
@@ -12,23 +16,19 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  List cardList = [
-    DetailsCard(
-      color: kInfectedColor,
-      label: "INFECTED",
-      cases: 784309,
-    ),
-    DetailsCard(
-      color: kRecoverColor,
-      label: "RECOVERED",
-      cases: 29045,
-    ),
-    DetailsCard(
-      color: kDeathColor,
-      label: "DEATHS",
-      cases: 3404,
-    )
-  ];
+  int infected_cases = 0;
+  int recovered_cases = 0;
+  int death_cases = 0;
+  NetworkHelper helper = NetworkHelper(url: url);
+  setNumberOfCases() async {
+    var data = await helper.getData();
+    setState(() {
+      infected_cases = data['confirmed']['value'];
+      recovered_cases = data['recovered']['value'];
+      death_cases = data['deaths']['value'];
+    });
+  }
+
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {
@@ -38,7 +38,25 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setNumberOfCases();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    List cardList = [
+      DetailsCard(
+        color: kInfectedColor,
+        label: "confirmed",
+        cases: infected_cases,
+      ),
+      DetailsCard(
+          color: kRecoverColor, label: "recovered", cases: recovered_cases),
+      DetailsCard(color: kDeathColor, label: "deaths", cases: death_cases)
+    ];
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

@@ -1,14 +1,23 @@
+import 'package:covid19app/utilities/networkHelper.dart';
 import 'package:flutter/material.dart';
 import '../constant.dart';
 import './DecoratedCircle.dart';
 import 'package:intl/intl.dart';
 
-class DetailsCard extends StatelessWidget {
+const url = 'https://covid19.mathdro.id/api/';
+
+class DetailsCard extends StatefulWidget {
   final String label;
   final Color color;
   final int cases;
-  final formatter = new NumberFormat("#,###");
   DetailsCard({this.label, this.color, this.cases});
+
+  @override
+  _DetailsCardState createState() => _DetailsCardState();
+}
+
+class _DetailsCardState extends State<DetailsCard> {
+  final formatter = new NumberFormat("#,###");
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,7 +36,7 @@ class DetailsCard extends StatelessWidget {
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 stops: [0.08, 0.08],
-                colors: [color, color.withOpacity(0.2)],
+                colors: [widget.color, widget.color.withOpacity(0.2)],
               ),
               boxShadow: [
                 BoxShadow(
@@ -39,18 +48,18 @@ class DetailsCard extends StatelessWidget {
 //                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   DecoratedCircle(
-                    color: color,
+                    color: widget.color,
                   ),
                   Text(
-                    formatter.format(cases),
+                    formatter.format(widget.cases),
                     style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.w700,
-                        color: color),
+                        color: widget.color),
                   ),
-                  Text(label,
+                  Text(widget.label.toUpperCase(),
                       style: TextStyle(
-                          color: color.withOpacity(0.8),
+                          color: widget.color.withOpacity(0.8),
                           fontSize: 16,
                           fontWeight: FontWeight.bold)),
                 ],
