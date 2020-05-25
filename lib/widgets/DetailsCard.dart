@@ -12,7 +12,7 @@ class DetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(8.0),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -36,7 +36,7 @@ class DetailsCard extends StatelessWidget {
           child: Center(
             child: FittedBox(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+//                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   DecoratedCircle(
                     color: color,

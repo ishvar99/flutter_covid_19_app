@@ -175,7 +175,7 @@ class _HomeState extends State<Home> {
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       pauseAutoPlayOnTouch: true,
-                      viewportFraction: 1,
+                      viewportFraction: 0.9,
                       enableInfiniteScroll: false,
                       aspectRatio: 1.7,
                       onPageChanged: (index, reason) {

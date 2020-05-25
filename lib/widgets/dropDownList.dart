@@ -11,6 +11,7 @@ class DropDownList extends StatefulWidget {
 
 class _DropDownListState extends State<DropDownList> {
   List countriesList = [];
+  String dropDownValue = 'Global';
   Future<void> operateData() async {
     NetworkHelper network = NetworkHelper(url: url);
     var data = await network.getData();
@@ -35,7 +36,7 @@ class _DropDownListState extends State<DropDownList> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      value: 'Global',
+      value: dropDownValue,
       icon: SvgPicture.asset('assets/icons/dropdown.svg'),
       underline: SizedBox(),
       isExpanded: true,
@@ -45,7 +46,11 @@ class _DropDownListState extends State<DropDownList> {
           child: Text(value),
         );
       }).toList(),
-      onChanged: (val) {},
+      onChanged: (val) {
+        setState(() {
+          dropDownValue = val;
+        });
+      },
     );
   }
 }
