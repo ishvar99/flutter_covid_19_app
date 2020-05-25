@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
-import '../widgets/DetailsCard.dart';
-import '../constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../widgets/dropDownList.dart';
+import '../widgets/DetailsCard.dart';
+import '../constant.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -117,22 +117,7 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       width: 20,
                     ),
-                    Expanded(
-                      child: DropdownButton<String>(
-                        value: 'India',
-                        icon: SvgPicture.asset('assets/icons/dropdown.svg'),
-                        underline: SizedBox(),
-                        isExpanded: true,
-                        items: ['India', 'Australia', 'USA', 'UK']
-                            .map((String value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (val) {},
-                      ),
-                    ),
+                    Expanded(child: DropDownList()),
                   ],
                 ),
               ),

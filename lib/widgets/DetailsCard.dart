@@ -17,7 +17,7 @@ class DetailsCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        elevation: 4,
+        elevation: 5,
         child: Container(
           width: double.infinity,
           height: 150,
@@ -26,7 +26,7 @@ class DetailsCard extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                stops: [0.05, 0.05],
+                stops: [0.08, 0.08],
                 colors: [color, color.withOpacity(0.2)],
               ),
               boxShadow: [
