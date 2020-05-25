@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../constant.dart';
 import './DecoratedCircle.dart';
+import 'package:intl/intl.dart';
 
 class DetailsCard extends StatelessWidget {
   final String label;
   final Color color;
   final int cases;
-
+  final formatter = new NumberFormat("#,###");
   DetailsCard({this.label, this.color, this.cases});
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class DetailsCard extends StatelessWidget {
                     color: color,
                   ),
                   Text(
-                    cases.toString(),
+                    formatter.format(cases),
                     style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.w700,
