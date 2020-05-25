@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import '../widgets/DetailsCard.dart';
 import '../constant.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,23 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  List cardList = [DetailsCard(), DetailsCard(), DetailsCard()];
+  List cardList = [
+    DetailsCard(
+      color: kInfectedColor,
+      label: "INFECTED",
+      cases: 784309,
+    ),
+    DetailsCard(
+      color: kRecoverColor,
+      label: "RECOVERED",
+      cases: 29045,
+    ),
+    DetailsCard(
+      color: kDeathColor,
+      label: "DEATHS",
+      cases: 3404,
+    )
+  ];
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {
@@ -30,7 +47,7 @@ class _HomeState extends State<Home> {
               ClipPath(
                 clipper: MyClipper(),
                 child: Container(
-                  height: 300,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -64,7 +81,7 @@ class _HomeState extends State<Home> {
                               child: SvgPicture.asset(
                                 'assets/icons/Drcorona.svg',
                                 alignment: Alignment.topCenter,
-                                fit: BoxFit.fitWidth,
+                                fit: BoxFit.cover,
                               ),
                             ),
                             Positioned(
@@ -145,8 +162,27 @@ class _HomeState extends State<Home> {
                       )
                     ]),
               ),
+              SizedBox(
+                height: 15,
+              ),
               Column(
                 children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: map<Widget>(cardList, (index, url) {
+                      return Container(
+                        width: 10.0,
+                        height: 10.0,
+                        margin: EdgeInsets.symmetric(horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentIndex == index
+                              ? kPrimaryColor
+                              : Colors.grey,
+                        ),
+                      );
+                    }),
+                  ),
                   CarouselSlider(
                     options: CarouselOptions(
                       autoPlay: true,
@@ -156,7 +192,7 @@ class _HomeState extends State<Home> {
                       pauseAutoPlayOnTouch: true,
                       viewportFraction: 1,
                       enableInfiniteScroll: false,
-                      aspectRatio: 2.0,
+                      aspectRatio: 1.7,
                       onPageChanged: (index, reason) {
                         setState(() {
                           _currentIndex = index;
@@ -168,22 +204,6 @@ class _HomeState extends State<Home> {
                         return card;
                       });
                     }).toList(),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: map<Widget>(cardList, (index, url) {
-                      return Container(
-                        width: 10.0,
-                        height: 10.0,
-                        margin: EdgeInsets.symmetric(horizontal: 2.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _currentIndex == index
-                              ? Colors.blueAccent
-                              : Colors.grey,
-                        ),
-                      );
-                    }),
                   ),
                 ],
               )

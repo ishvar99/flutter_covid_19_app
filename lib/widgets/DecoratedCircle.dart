@@ -6,12 +6,10 @@ class DecoratedCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 25,
-      width: 25,
-      decoration: BoxDecoration(
-        color: color.withOpacity(.26),
-        shape: BoxShape.circle,
-      ),
+      height: 35,
+      width: 35,
+      decoration:
+          BoxDecoration(color: color.withOpacity(.26), shape: BoxShape.circle),
       child: Padding(
         padding: const EdgeInsets.all(6.0),
         child: Container(

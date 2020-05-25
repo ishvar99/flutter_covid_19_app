@@ -3,73 +3,59 @@ import '../constant.dart';
 import './DecoratedCircle.dart';
 
 class DetailsCard extends StatelessWidget {
+  final String label;
+  final Color color;
+  final int cases;
+
+  DetailsCard({this.label, this.color, this.cases});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Container(
-        width: double.infinity,
-        height: 150,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  offset: Offset(0, 4), blurRadius: 30, color: kShadowColor)
-            ]),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        elevation: 4,
+        child: Container(
+          width: double.infinity,
+          height: 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                stops: [0.05, 0.05],
+                colors: [color, color.withOpacity(0.2)],
+              ),
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset(0, 4), blurRadius: 30, color: kShadowColor)
+              ]),
+          child: Center(
+            child: FittedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   DecoratedCircle(
-                    color: kInfectedColor,
+                    color: color,
                   ),
-                  DecoratedCircle(color: kRecoverColor),
-                  DecoratedCircle(
-                    color: kDeathColor,
-                  )
+                  Text(
+                    cases.toString(),
+                    style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.w700,
+                        color: color),
+                  ),
+                  Text(label,
+                      style: TextStyle(
+                          color: color.withOpacity(0.8),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  '1046',
-                  style: TextStyle(fontSize: 40, color: kInfectedColor),
-                ),
-                Text(
-                  '1046',
-                  style: TextStyle(fontSize: 40, color: kRecoverColor),
-                ),
-                Text(
-                  '1046',
-                  style: TextStyle(fontSize: 40, color: kDeathColor),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  'Infected',
-                  style: kSubTextStyle,
-                ),
-                Text(
-                  'Recovered',
-                  style: kSubTextStyle,
-                ),
-                Text(
-                  'Deaths',
-                  style: kSubTextStyle,
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
       ),
     );
