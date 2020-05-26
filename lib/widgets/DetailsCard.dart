@@ -1,4 +1,3 @@
-import 'package:covid19app/utilities/networkHelper.dart';
 import 'package:flutter/material.dart';
 import '../constant.dart';
 import './DecoratedCircle.dart';
