@@ -18,6 +18,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   AppData appData;
   bool _isLoading = true;
+  List cardList;
   int _currentIndex = 0;
   NetworkHelper helper = NetworkHelper(url: url);
 
@@ -48,21 +49,25 @@ class _HomeState extends State<Home> {
       appData = Provider.of<AppData>(context);
       setNumberOfCases(appData);
     });
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List cardList = [
+    cardList = [
       DetailsCard(
         color: kInfectedColor,
         label: "confirmed",
-        cases: appData.infected,
+        cases: appData == null ? 0 : appData.infected,
       ),
       DetailsCard(
-          color: kRecoverColor, label: "recovered", cases: appData.recovered),
-      DetailsCard(color: kDeathColor, label: "deaths", cases: appData.deaths)
+          color: kRecoverColor,
+          label: "recovered",
+          cases: appData == null ? 0 : appData.recovered),
+      DetailsCard(
+          color: kDeathColor,
+          label: "deaths",
+          cases: appData == null ? 0 : appData.deaths)
     ];
     return Scaffold(
       body: SafeArea(
