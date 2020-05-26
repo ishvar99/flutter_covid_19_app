@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:covid19app/utilities/networkHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
+import '../providers/data.dart';
 import '../widgets/dropDownList.dart';
 import '../widgets/DetailsCard.dart';
 import '../constant.dart';
@@ -15,19 +16,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  AppData appData;
   bool _isLoading = true;
   int _currentIndex = 0;
-  int infected_cases = 0;
-  int recovered_cases = 0;
-  int death_cases = 0;
   NetworkHelper helper = NetworkHelper(url: url);
 
-  Future<void> setNumberOfCases() async {
+  Future<void> setNumberOfCases(AppData appData) async {
     var data = await helper.getData();
     setState(() {
-      infected_cases = data['confirmed']['value'];
-      recovered_cases = data['recovered']['value'];
-      death_cases = data['deaths']['value'];
+      appData.infected = data['confirmed']['value'];
+      appData.recovered = data['recovered']['value'];
+      appData.deaths = data['deaths']['value'];
+      print(appData.infected);
+      print(appData.recovered);
+      print(appData.deaths);
       _isLoading = false;
     });
   }
@@ -43,8 +45,10 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setNumberOfCases();
+      appData = Provider.of<AppData>(context);
+      setNumberOfCases(appData);
     });
+
     super.initState();
   }
 
@@ -54,16 +58,16 @@ class _HomeState extends State<Home> {
       DetailsCard(
         color: kInfectedColor,
         label: "confirmed",
-        cases: infected_cases,
+        cases: appData.infected,
       ),
       DetailsCard(
-          color: kRecoverColor, label: "recovered", cases: recovered_cases),
-      DetailsCard(color: kDeathColor, label: "deaths", cases: death_cases)
+          color: kRecoverColor, label: "recovered", cases: appData.recovered),
+      DetailsCard(color: kDeathColor, label: "deaths", cases: appData.deaths)
     ];
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: setNumberOfCases,
+          onRefresh: () => setNumberOfCases(appData),
           child: SingleChildScrollView(
             child: Stack(
               children: <Widget>[
@@ -143,7 +147,9 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             width: 20,
                           ),
-                          Expanded(child: DropDownList()),
+                          Expanded(
+                            child: DropDownList(),
+                          ),
                         ],
                       ),
                     ),
@@ -204,7 +210,7 @@ class _HomeState extends State<Home> {
                             pauseAutoPlayOnTouch: true,
                             viewportFraction: 0.9,
                             enableInfiniteScroll: false,
-                            aspectRatio: 1.7,
+                            aspectRatio: 1.8,
                             onPageChanged: (index, reason) {
                               setState(() {
                                 _currentIndex = index;

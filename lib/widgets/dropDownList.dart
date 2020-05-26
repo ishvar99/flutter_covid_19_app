@@ -1,6 +1,8 @@
 import 'package:covid19app/utilities/networkHelper.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../providers/data.dart';
 
 const url = 'https://covid19.mathdro.id/api/countries';
 
@@ -12,6 +14,7 @@ class DropDownList extends StatefulWidget {
 class _DropDownListState extends State<DropDownList> {
   List countriesList = [];
   String dropDownValue = 'Global';
+
   Future<void> operateData() async {
     NetworkHelper network = NetworkHelper(url: url);
     var data = await network.getData();
@@ -35,6 +38,7 @@ class _DropDownListState extends State<DropDownList> {
 
   @override
   Widget build(BuildContext context) {
+    final AppData appData = Provider.of<AppData>(context);
     return DropdownButton<String>(
       value: dropDownValue,
       icon: SvgPicture.asset('assets/icons/dropdown.svg'),
