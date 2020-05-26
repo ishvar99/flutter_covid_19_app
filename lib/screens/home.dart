@@ -219,13 +219,15 @@ class _HomeState extends State<Home> {
               ),
               Container(
                 child: Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 8,
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(Colors.deepOrangeAccent),
-                  ),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          strokeWidth: 8,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.deepOrangeAccent),
+                        )
+                      : Container(),
                 ),
-                color: Colors.black.withOpacity(_isLoading ? 0.5 : 1.0),
+                color: Colors.black.withOpacity(_isLoading ? 0.5 : 0.0),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
               )

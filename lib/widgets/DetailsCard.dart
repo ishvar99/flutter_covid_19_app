@@ -50,7 +50,9 @@ class _DetailsCardState extends State<DetailsCard> {
                     color: widget.color,
                   ),
                   Text(
-                    formatter.format(widget.cases),
+                    widget.cases == 0
+                        ? "Loading..."
+                        : formatter.format(widget.cases),
                     style: TextStyle(
                         fontSize: 50,
                         fontWeight: FontWeight.w700,
