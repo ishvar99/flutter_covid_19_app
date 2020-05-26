@@ -21,12 +21,8 @@ class _HomeState extends State<Home> {
   int recovered_cases = 0;
   int death_cases = 0;
   NetworkHelper helper = NetworkHelper(url: url);
-  Future<void> _refreshed() async {
-    _isLoading = true;
-    await setNumberOfCases();
-  }
 
-  setNumberOfCases() async {
+  Future<void> setNumberOfCases() async {
     var data = await helper.getData();
     setState(() {
       infected_cases = data['confirmed']['value'];
@@ -67,7 +63,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: _refreshed,
+          onRefresh: setNumberOfCases,
           child: SingleChildScrollView(
             child: Stack(
               children: <Widget>[
