@@ -15,7 +15,11 @@ class _DropDownListState extends State<DropDownList> {
   AppData appData;
   List countriesList = [];
   String dropDownValue = 'Global';
-  Future<void> fetchCountriesData(dropDownValue) async {
+
+  Future<void> fetchCountriesData() async {
+    appData.infected = 0;
+    appData.recovered = 0;
+    appData.deaths = 0;
     NetworkHelper network = NetworkHelper(url: '$url/$dropDownValue');
     var data = await network.getData();
     appData.infected = data['confirmed']['value'];
@@ -59,10 +63,10 @@ class _DropDownListState extends State<DropDownList> {
         );
       }).toList(),
       onChanged: (val) async {
-        await fetchCountriesData(val);
         setState(() {
           dropDownValue = val;
         });
+        await fetchCountriesData();
       },
     );
   }
