@@ -8,6 +8,15 @@ class AppData extends ChangeNotifier {
   int get recovered => _recovered;
   int get deaths => _deaths;
 
+  int getData(label) {
+    if (label == 'confirmed')
+      return _infected;
+    else if (label == 'recovered')
+      return _recovered;
+    else
+      return _deaths;
+  }
+
   set infected(int val) {
     _infected = val;
     notifyListeners();

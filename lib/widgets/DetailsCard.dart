@@ -53,9 +53,9 @@ class _DetailsCardState extends State<DetailsCard> {
                   Consumer<AppData>(
                     builder: (context, data, child) {
                       return Text(
-                        data.infected == 0
+                        data.getData(widget.label) == 0
                             ? "Loading..."
-                            : formatter.format(data.infected),
+                            : formatter.format(data.getData(widget.label)),
                         style: TextStyle(
                             fontSize: 50,
                             fontWeight: FontWeight.w700,
