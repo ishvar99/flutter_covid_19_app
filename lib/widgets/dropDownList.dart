@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../providers/data.dart';
 
-const url = 'https://covid19.mathdro.id/api/countries';
+const url = 'https://covid19.mathdro.id/api';
 
 class DropDownList extends StatefulWidget {
   @override
@@ -17,10 +17,17 @@ class _DropDownListState extends State<DropDownList> {
   String dropDownValue = 'Global';
 
   Future<void> fetchCountriesData() async {
+    var targetUrl;
     appData.infected = 0;
     appData.recovered = 0;
     appData.deaths = 0;
-    NetworkHelper network = NetworkHelper(url: '$url/$dropDownValue');
+
+    if (dropDownValue == 'Global') {
+      targetUrl = '$url';
+    } else {
+      targetUrl = '$url/countries/$dropDownValue';
+    }
+    NetworkHelper network = NetworkHelper(url: targetUrl);
     var data = await network.getData();
     appData.infected = data['confirmed']['value'];
     appData.recovered = data['recovered']['value'];
@@ -28,7 +35,7 @@ class _DropDownListState extends State<DropDownList> {
   }
 
   Future<void> fetchCountriesList() async {
-    NetworkHelper network = NetworkHelper(url: url);
+    NetworkHelper network = NetworkHelper(url: '$url/countries');
     var data = await network.getData();
     List countries = data['countries'].map((country) {
       return country['name'];
