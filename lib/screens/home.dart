@@ -28,9 +28,6 @@ class _HomeState extends State<Home> {
       appData.infected = data['confirmed']['value'];
       appData.recovered = data['recovered']['value'];
       appData.deaths = data['deaths']['value'];
-      print(appData.infected);
-      print(appData.recovered);
-      print(appData.deaths);
       _isLoading = false;
     });
   }
@@ -58,16 +55,12 @@ class _HomeState extends State<Home> {
       DetailsCard(
         color: kInfectedColor,
         label: "confirmed",
-        cases: appData == null ? 0 : appData.infected,
       ),
+      DetailsCard(color: kRecoverColor, label: "recovered"),
       DetailsCard(
-          color: kRecoverColor,
-          label: "recovered",
-          cases: appData == null ? 0 : appData.recovered),
-      DetailsCard(
-          color: kDeathColor,
-          label: "deaths",
-          cases: appData == null ? 0 : appData.deaths)
+        color: kDeathColor,
+        label: "deaths",
+      )
     ];
     return Scaffold(
       body: SafeArea(

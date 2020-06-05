@@ -12,10 +12,18 @@ class DropDownList extends StatefulWidget {
 }
 
 class _DropDownListState extends State<DropDownList> {
+  AppData appData;
   List countriesList = [];
   String dropDownValue = 'Global';
+  Future<void> fetchCountriesData(dropDownValue) async {
+    NetworkHelper network = NetworkHelper(url: '$url/$dropDownValue');
+    var data = await network.getData();
+    appData.infected = data['confirmed']['value'];
+    appData.recovered = data['recovered']['value'];
+    appData.deaths = data['deaths']['value'];
+  }
 
-  Future<void> operateData() async {
+  Future<void> fetchCountriesList() async {
     NetworkHelper network = NetworkHelper(url: url);
     var data = await network.getData();
     List countries = data['countries'].map((country) {
@@ -25,7 +33,7 @@ class _DropDownListState extends State<DropDownList> {
   }
 
   getCountriesList() async {
-    await operateData();
+    await fetchCountriesList();
   }
 
   @override
@@ -38,7 +46,7 @@ class _DropDownListState extends State<DropDownList> {
 
   @override
   Widget build(BuildContext context) {
-    final AppData appData = Provider.of<AppData>(context);
+    appData = Provider.of<AppData>(context);
     return DropdownButton<String>(
       value: dropDownValue,
       icon: SvgPicture.asset('assets/icons/dropdown.svg'),
@@ -50,7 +58,8 @@ class _DropDownListState extends State<DropDownList> {
           child: Text(value),
         );
       }).toList(),
-      onChanged: (val) {
+      onChanged: (val) async {
+        await fetchCountriesData(val);
         setState(() {
           dropDownValue = val;
         });

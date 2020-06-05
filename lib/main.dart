@@ -10,19 +10,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppData>.value(
-      value: AppData(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            primarySwatch: Colors.blue,
-            scaffoldBackgroundColor: kBackgroundColor,
-            fontFamily: 'Poppins',
-            textTheme: TextTheme(
-              body1: TextStyle(color: kBodyTextColor),
-            )),
-        home: Home(),
-      ),
-    );
+    return (MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: kBackgroundColor,
+          fontFamily: 'Poppins',
+          textTheme: TextTheme(
+            body1: TextStyle(color: kBodyTextColor),
+          )),
+      home:
+          ChangeNotifierProvider(create: (context) => AppData(), child: Home()),
+    ));
   }
 }

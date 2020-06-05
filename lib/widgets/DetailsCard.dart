@@ -1,15 +1,16 @@
+import 'package:covid19app/providers/data.dart';
 import 'package:flutter/material.dart';
 import '../constant.dart';
 import './DecoratedCircle.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 const url = 'https://covid19.mathdro.id/api/';
 
 class DetailsCard extends StatefulWidget {
   final String label;
   final Color color;
-  final int cases;
-  DetailsCard({this.label, this.color, this.cases});
+  DetailsCard({this.label, this.color});
 
   @override
   _DetailsCardState createState() => _DetailsCardState();
@@ -49,14 +50,18 @@ class _DetailsCardState extends State<DetailsCard> {
                   DecoratedCircle(
                     color: widget.color,
                   ),
-                  Text(
-                    widget.cases == 0
-                        ? "Loading..."
-                        : formatter.format(widget.cases),
-                    style: TextStyle(
-                        fontSize: 50,
-                        fontWeight: FontWeight.w700,
-                        color: widget.color),
+                  Consumer<AppData>(
+                    builder: (context, data, child) {
+                      return Text(
+                        data.infected == 0
+                            ? "Loading..."
+                            : formatter.format(data.infected),
+                        style: TextStyle(
+                            fontSize: 50,
+                            fontWeight: FontWeight.w700,
+                            color: widget.color),
+                      );
+                    },
                   ),
                   Text(widget.label.toUpperCase(),
                       style: TextStyle(
