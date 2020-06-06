@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:covid19app/utilities/networkHelper.dart';
+import 'package:covid19app/widgets/LoadingBackdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
@@ -201,7 +202,7 @@ class _HomeState extends State<Home> {
                         CarouselSlider(
                           options: CarouselOptions(
                             autoPlay: true,
-                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayInterval: Duration(seconds: 5),
                             autoPlayAnimationDuration:
                                 Duration(milliseconds: 800),
                             autoPlayCurve: Curves.fastOutSlowIn,
@@ -225,19 +226,7 @@ class _HomeState extends State<Home> {
                     )
                   ],
                 ),
-                _isLoading
-                    ? Container(
-                        child: Center(
-                            child: CircularProgressIndicator(
-                          strokeWidth: 8,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.deepOrangeAccent),
-                        )),
-                        color: Colors.black.withOpacity(0.5),
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                      )
-                    : Container()
+                _isLoading ? LoadingBackdrop() : Container()
               ],
             ),
           ),
