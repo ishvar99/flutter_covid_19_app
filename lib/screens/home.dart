@@ -2,6 +2,7 @@ import 'package:covid19app/utilities/networkHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
+import '../widgets/worldMap.dart';
 import '../widgets/LoadingBackdrop.dart';
 import '../providers/data.dart';
 import '../widgets/dropDownList.dart';
@@ -143,42 +144,7 @@ class _HomeState extends State<Home> {
                   Header(
                     label: "Spread of Virus",
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        // padding: const EdgeInsets.all(10.0),
-                        width: double.infinity,
-                        height: 190,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              stops: [0.08, 0.08],
-                              colors: [
-                                kPrimaryColor,
-                                Colors.black.withOpacity(0.8)
-                              ],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(0, 10),
-                                blurRadius: 30,
-                                color: kShadowColor,
-                              ),
-                            ],
-                            // color: kPrimaryColor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Image.asset(
-                          'assets/images/map.png',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  )
+                  WorldMap(),
                 ],
               ),
               _isLoading ? LoadingBackdrop() : Container()
