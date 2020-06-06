@@ -4,7 +4,7 @@ class AppData extends ChangeNotifier {
   int _infected = 0;
   int _recovered = 0;
   int _deaths = 0;
-  String _lastUpdated = "";
+  String _lastUpdated = '';
   String get lastUpdated => _lastUpdated;
 
   int getCases(label) {
