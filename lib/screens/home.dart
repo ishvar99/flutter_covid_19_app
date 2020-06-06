@@ -5,10 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
 import '../providers/data.dart';
 import '../widgets/dropDownList.dart';
-import '../widgets/DetailsCard.dart';
+
 import '../constant.dart';
 import '../widgets/Carousel.dart';
-import '../widgets/PaginationDots.dart';
 
 const url = 'https://covid19.mathdro.id/api/';
 
@@ -43,17 +42,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final cardList = [
-      DetailsCard(
-        color: kInfectedColor,
-        label: "confirmed",
-      ),
-      DetailsCard(color: kRecoverColor, label: "recovered"),
-      DetailsCard(
-        color: kDeathColor,
-        label: "deaths",
-      )
-    ];
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
@@ -172,9 +160,7 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 15,
                     ),
-                    Carousel(
-                      cardList: cardList,
-                    )
+                    Carousel()
                   ],
                 ),
                 _isLoading ? LoadingBackdrop() : Container()
