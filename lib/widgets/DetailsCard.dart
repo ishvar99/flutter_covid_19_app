@@ -1,9 +1,9 @@
 import 'package:covid19app/providers/data.dart';
 import 'package:flutter/material.dart';
-import '../constant.dart';
-import './DecoratedCircle.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '../constant.dart';
+import './DecoratedCircle.dart';
 
 const url = 'https://covid19.mathdro.id/api/';
 
@@ -53,11 +53,11 @@ class _DetailsCardState extends State<DetailsCard> {
                   Consumer<AppData>(
                     builder: (context, data, child) {
                       return Text(
-                        data.getData(widget.label) == 0
+                        data.getCases(widget.label) == 0
                             ? "Loading..."
-                            : formatter.format(data.getData(widget.label)),
+                            : formatter.format(data.getCases(widget.label)),
                         style: TextStyle(
-                            fontSize: 50,
+                            fontSize: 48,
                             fontWeight: FontWeight.w700,
                             color: widget.color),
                       );

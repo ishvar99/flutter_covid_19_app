@@ -32,6 +32,7 @@ class _DropDownListState extends State<DropDownList> {
     appData.infected = data['confirmed']['value'];
     appData.recovered = data['recovered']['value'];
     appData.deaths = data['deaths']['value'];
+    appData.lastUpdated = data['lastUpdate'];
   }
 
   Future<void> fetchCountriesList() async {

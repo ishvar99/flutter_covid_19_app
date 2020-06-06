@@ -4,11 +4,10 @@ class AppData extends ChangeNotifier {
   int _infected = 0;
   int _recovered = 0;
   int _deaths = 0;
-  int get infected => _infected;
-  int get recovered => _recovered;
-  int get deaths => _deaths;
+  String _lastUpdated = "";
+  String get lastUpdated => _lastUpdated;
 
-  int getData(label) {
+  int getCases(label) {
     if (label == 'confirmed')
       return _infected;
     else if (label == 'recovered')
@@ -19,6 +18,11 @@ class AppData extends ChangeNotifier {
 
   set infected(int val) {
     _infected = val;
+    notifyListeners();
+  }
+
+  set lastUpdated(String val) {
+    _lastUpdated = val;
     notifyListeners();
   }
 

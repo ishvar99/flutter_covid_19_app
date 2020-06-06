@@ -1,13 +1,13 @@
 import 'package:covid19app/utilities/networkHelper.dart';
-import '../widgets/LoadingBackdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
+import '../widgets/LoadingBackdrop.dart';
 import '../providers/data.dart';
 import '../widgets/dropDownList.dart';
-
 import '../constant.dart';
 import '../widgets/Carousel.dart';
+import '../widgets/header.dart';
 
 const url = 'https://covid19.mathdro.id/api/';
 
@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
       appData.infected = data['confirmed']['value'];
       appData.recovered = data['recovered']['value'];
       appData.deaths = data['deaths']['value'];
+      appData.lastUpdated = data['lastUpdate'];
       _isLoading = false;
     });
   }
@@ -43,129 +44,106 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () => setNumberOfCases(appData),
-          child: SingleChildScrollView(
-            child: Stack(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    ClipPath(
-                      clipper: MyClipper(),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/virus.png')),
-                          gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [
-                              Color(0xFF3383CD),
-                              Color(0xFF11249F),
-                            ],
-                          ),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child:
-                                    SvgPicture.asset('assets/icons/menu.svg'),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Expanded(
-                              child: Stack(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 30.0),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/Drcorona.svg',
-                                      alignment: Alignment.topCenter,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 20,
-                                    left: 180,
-                                    child: Text(
-                                      'All you need \nis stay at home',
-                                      style: kHeadingTextStyle.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                  Container()
-                                ],
-                              ),
-                            ),
+      body: RefreshIndicator(
+        onRefresh: () => setNumberOfCases(appData),
+        child: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  ClipPath(
+                    clipper: MyClipper(),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/virus.png')),
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xFF3383CD),
+                            Color(0xFF11249F),
                           ],
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 50,
-                      margin: EdgeInsets.symmetric(horizontal: 15.0),
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Color(0xFFE5E5E5))),
-                      child: Row(
+                      child: Column(
                         children: <Widget>[
-                          SvgPicture.asset(
-                            'assets/icons/maps-and-flags.svg',
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: SvgPicture.asset('assets/icons/menu.svg'),
+                            ),
                           ),
                           SizedBox(
-                            width: 20,
+                            height: 20,
                           ),
                           Expanded(
-                            child: DropDownList(),
+                            child: Stack(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 30.0),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/Drcorona.svg',
+                                    alignment: Alignment.topCenter,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 20,
+                                  left: 180,
+                                  child: Text(
+                                    'All you need \nis stay at home',
+                                    style: kHeadingTextStyle.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                                Container()
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Case Update',
-                              style: kTitleTextstyle,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  'Newest Update May 24',
-                                  style: TextStyle(color: kTextLightColor),
-                                ),
-                                Text(
-                                  'see details',
-                                  style: TextStyle(
-                                      color: kPrimaryColor,
-                                      fontWeight: FontWeight.w600),
-                                )
-                              ],
-                            )
-                          ]),
+                  ),
+                  Container(
+                    height: 50,
+                    margin: EdgeInsets.symmetric(horizontal: 15.0),
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Color(0xFFE5E5E5))),
+                    child: Row(
+                      children: <Widget>[
+                        SvgPicture.asset(
+                          'assets/icons/maps-and-flags.svg',
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: DropDownList(),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Carousel()
-                  ],
-                ),
-                _isLoading ? LoadingBackdrop() : Container()
-              ],
-            ),
+                  ),
+                  Header(
+                    label: 'Case Update',
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Carousel(),
+                  Header(
+                    label: "Spread of Virus",
+                  )
+                ],
+              ),
+              _isLoading ? LoadingBackdrop() : Container()
+            ],
           ),
         ),
       ),
