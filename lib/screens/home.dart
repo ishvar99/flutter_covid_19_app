@@ -1,6 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:covid19app/utilities/networkHelper.dart';
-import 'package:covid19app/widgets/LoadingBackdrop.dart';
+import '../widgets/LoadingBackdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +7,8 @@ import '../providers/data.dart';
 import '../widgets/dropDownList.dart';
 import '../widgets/DetailsCard.dart';
 import '../constant.dart';
+import '../widgets/Carousel.dart';
+import '../widgets/PaginationDots.dart';
 
 const url = 'https://covid19.mathdro.id/api/';
 
@@ -19,8 +20,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   AppData appData;
   bool _isLoading = true;
-  List cardList;
-  int _currentIndex = 0;
   NetworkHelper helper = NetworkHelper(url: url);
 
   Future<void> setNumberOfCases(AppData appData) async {
@@ -31,14 +30,6 @@ class _HomeState extends State<Home> {
       appData.deaths = data['deaths']['value'];
       _isLoading = false;
     });
-  }
-
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
-    for (var i = 0; i < list.length; i++) {
-      result.add(handler(i, list[i]));
-    }
-    return result;
   }
 
   @override
@@ -52,7 +43,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    cardList = [
+    final cardList = [
       DetailsCard(
         color: kInfectedColor,
         label: "confirmed",
@@ -181,48 +172,8 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 15,
                     ),
-                    Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: map<Widget>(cardList, (index, url) {
-                            return Container(
-                              width: 10.0,
-                              height: 10.0,
-                              margin: EdgeInsets.symmetric(horizontal: 2.0),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: _currentIndex == index
-                                    ? kPrimaryColor
-                                    : Colors.grey,
-                              ),
-                            );
-                          }),
-                        ),
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            autoPlay: true,
-                            autoPlayInterval: Duration(seconds: 5),
-                            autoPlayAnimationDuration:
-                                Duration(milliseconds: 800),
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            pauseAutoPlayOnTouch: true,
-                            viewportFraction: 0.9,
-                            enableInfiniteScroll: false,
-                            aspectRatio: 1.8,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _currentIndex = index;
-                              });
-                            },
-                          ),
-                          items: cardList.map((card) {
-                            return Builder(builder: (BuildContext context) {
-                              return card;
-                            });
-                          }).toList(),
-                        ),
-                      ],
+                    Carousel(
+                      cardList: cardList,
                     )
                   ],
                 ),
